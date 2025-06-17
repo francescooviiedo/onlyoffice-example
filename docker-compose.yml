@@ -12,7 +12,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-init:/docker-entrypoint-initdb.d
+      - ./backend/mysql-init:/docker-entrypoint-initdb.d
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -21,8 +21,8 @@ services:
       - "8080:80"
     environment:
       PMA_HOST: db
-      PMA_USER: exampleuser
-      PMA_PASSWORD: examplepass
+      PMA_USER: root
+      PMA_PASSWORD: example
 
   backend:
     build: ./backend
@@ -38,7 +38,7 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/app
+      - ./backend:/app
       - /app/node_modules
 
   frontend:
