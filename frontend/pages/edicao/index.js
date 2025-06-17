@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -23,11 +21,10 @@ export default function Home() {
   const [status, setStatus] = useState('');
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  
-
-useEffect(async () => {
-    setLoading(true);
+const getFiles = async () => {
+  setLoading(true);
         try {
             const response = await fetch('http://localhost:3055/files');
         if (response.ok) {
@@ -38,6 +35,10 @@ useEffect(async () => {
             setFiles([]);
         }
     setLoading(false);  
+}
+
+useEffect(() => {
+    getFiles();   
 }, []);
 
   const handleChange = (e) => {
